@@ -1,4 +1,4 @@
-module blink
+module control
 (
     input           clk,
     output  [5:0]   led

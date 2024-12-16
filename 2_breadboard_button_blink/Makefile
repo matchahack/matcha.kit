@@ -2,23 +2,26 @@ BOARD=tangnano9k
 FAMILY=GW1N-9C
 DEVICE=GW1NR-LV9QN88PC6/I5
 
-all: breadboard_button_blink.fs
+all: control.fs
 
 # Synthesis
-breadboard_button_blink.json: breadboard_button_blink.v
-	yosys -p "read_verilog breadboard_button_blink.v; synth_gowin -top breadboard_button_blink -json breadboard_button_blink.json"
+control.json: control.v
+	yosys -p "read_verilog control.v; synth_gowin -top control -json control.json"
 
 # Place and Route
-breadboard_button_blink_pnr.json: breadboard_button_blink.json
-	nextpnr-gowin --json breadboard_button_blink.json --freq 27 --write breadboard_button_blink_pnr.json --device ${DEVICE} --family ${FAMILY} --cst ${BOARD}.cst
+control_pnr.json: control.json
+	nextpnr-gowin --json control.json --freq 27 --write control_pnr.json --device ${DEVICE} --family ${FAMILY} --cst "../${BOARD}.cst"
 
 # Generate Bitstream
-breadboard_button_blink.fs: breadboard_button_blink_pnr.json
-	gowin_pack -d ${FAMILY} -o breadboard_button_blink.fs breadboard_button_blink_pnr.json
+control.fs: control_pnr.json
+	gowin_pack -d ${FAMILY} -o control.fs control_pnr.json
 
 # Program Board
-load: breadboard_button_blink.fs
-	openFPGALoader -b ${BOARD} breadboard_button_blink.fs -f
+load: control.fs
+	openFPGALoader -b ${BOARD} control.fs -f
+
+clean:
+	rm control.fs
 
 .PHONY: load
-.INTERMEDIATE: breadboard_button_blink_pnr.json breadboard_button_blink.json
+.INTERMEDIATE: control_pnr.json control.json

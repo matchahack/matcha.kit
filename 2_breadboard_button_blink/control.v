@@ -1,7 +1,7 @@
-module button_blink
+module control
 (
     input           clk,
-    input   [1:0]   button,
+    input   [2:0]   bbutton,
     output  [5:0]   led
 );
 
@@ -11,8 +11,9 @@ module button_blink
     reg start = 0;
 
     always @(posedge clk) begin
-        if (button[0] == 0) start <= 1;
-        if (button[1] == 0) start <= 0;
+        if (bbutton[0] == 0) start <= 1;
+        if (bbutton[1] == 0) start <= 1;
+        if (bbutton[2] == 0) start <= 1;
         if (start == 1) begin
             clockCounter <= clockCounter + 1;
             if (clockCounter == WAIT_TIME) begin
