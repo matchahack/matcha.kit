@@ -30,7 +30,7 @@
 
 ## TOOLS
 
-In this project we want only to use `open-source` tools. Here are the software tools we will use to make our hardware designs go `blinky blinky`.
+We will try only to use `open-source` tools. The following are OS software we will use to make our hardware designs go `blinky blinky`.
 
 ### Binary Building: Install the Toolchain
 
@@ -40,7 +40,7 @@ Once the reader has installed this successfully, they will be able to design har
 
 > The reader must install this tool on their host computer
 
-### Recording Live Signals: Debugging your Crappy Design 
+### Recording Live Signals: Debugging your Design 
 
 So you have created a binary and it is generating signals on the FPGA to peripheral components! How do you know it's doing what it is supposed to be doing? We need to record the signals - for this we will us the open-source tool [SIGROK](https://sigrok.org/).
 
@@ -62,8 +62,12 @@ In each subdirectory, there is a `Makefile` which builds the hardware design and
 
 ## RESOURCES
 
+The Tang Nano 9K docs can be found [in this directory](./docs/)
+
 The reader might also find these links useful:
 
-[Alternate Verilog compiler with nice error messages](https://github.com/FPGAwars/apio)
+- [Alternate Verilog compiler with nice error messages](https://github.com/FPGAwars/apio)
 
-[Debug openFPGA](https://trabucayre.github.io/openFPGALoader/guide/troubleshooting.html)
+- [Debug openFPGA](https://trabucayre.github.io/openFPGALoader/guide/troubleshooting.html)
+
+> [These tutorials](https://www.digikey.com/en/maker/projects/introduction-to-fpga-part-1-what-is-an-fpga/3ee5f6c8fa594161a655a9f960060893) are also nice to follow!
