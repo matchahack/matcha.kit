@@ -28,15 +28,14 @@ module control (
 );
     /*system wiring*/
     reg flash_start;
+    reg [1055:0]    SI_data;
+    reg [11:0]      SI_len;
+    reg [11:0]      SO_len;
+    reg [11:0]      OP_end;
     wire flash_done;
     wire sub_clock, SI_out_clock;
-
     wire [1023:0] SO_data;
-    reg [1055:0] SI_data;
-    reg [11:0] SI_len;
-    reg [11:0] SO_len;
-    reg [11:0] OP_end;
-
+    
     /*device states*/
     reg [3:0] DEVICE_STATE;
     parameter RESUME_PREP           = 4'b0000;

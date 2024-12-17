@@ -26,6 +26,8 @@
   jgs|  |  |  |  |  |  |  |  |  |  |  |  |  |
 ```
 
+> By the end of this guide, you will be doing `embedded systems signal generation and manipulation on bare metal`
+
 ---
 
 ## TOOLS

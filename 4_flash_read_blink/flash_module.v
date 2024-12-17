@@ -19,27 +19,27 @@
 `define FLASH_MODULE_V   // Define FLASH_MODULE_V
 
 module flash_module(
-    input   top_clk,
-    input   sub_clk,
-    input   flash_start,
-    input   [1055:0] SI_data,
-    input   [11:0] SI_len,
-    input   [11:0] SO_len,
-    input   [11:0] OP_end,
-    input   miso,
-    output  cs,
-    output  sck,
-    output  mosi,
-    output  [1023:0] SO_data,
-    output  flash_done
+    input               top_clk,
+    input               sub_clk,
+    input               flash_start,
+    input   [1055:0]    SI_data,
+    input   [11:0]      SI_len,
+    input   [11:0]      SO_len,
+    input   [11:0]      OP_end,
+    input               miso,
+    output              cs,
+    output              sck,
+    output              mosi,
+    output  [1023:0]    SO_data,
+    output              flash_done
 );
     /*module wiring*/
     reg CS_register, MOSI_register, SCK_register;
     reg [1023:0] SO_register;
-    assign cs               = CS_register;
-    assign sck              = SCK_register;
-    assign mosi             = MOSI_register;
-    assign SO_data          = SO_register;
+    assign cs       = CS_register;
+    assign sck      = SCK_register;
+    assign mosi     = MOSI_register;
+    assign SO_data  = SO_register;
 
     /*operation state*/
     parameter await_delay   = 0;

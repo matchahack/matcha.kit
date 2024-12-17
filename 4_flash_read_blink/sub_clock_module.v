@@ -36,8 +36,8 @@ module sub_clock_module(
 
     /*module wiring*/
     reg clock_state_active, SI_out_reg;
-    assign sub_clock        = clock_state_active;
-    assign SI_out_clock     = SI_out_reg;
+    assign sub_clock    = clock_state_active;
+    assign SI_out_clock = SI_out_reg;
 
     /*module initialisation*/
     initial begin

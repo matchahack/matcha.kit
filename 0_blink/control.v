@@ -5,7 +5,8 @@ module control
 );
 
     localparam WAIT_TIME = 13500000;
-    reg [5:0] ledCounter = 0;
+
+    reg [5:0]  ledCounter   = 0;
     reg [23:0] clockCounter = 0;
 
     always @(posedge clk) begin

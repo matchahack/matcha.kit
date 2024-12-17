@@ -6,9 +6,10 @@ module control
 );
 
     localparam WAIT_TIME = 13500000;
-    reg [5:0] ledCounter = 0;
-    reg [23:0] clockCounter = 0;
-    reg start = 0;
+
+    reg [5:0]   ledCounter      = 0;
+    reg [23:0]  clockCounter    = 0;
+    reg         start           = 0;
 
     always @(posedge clk) begin
         if (bbutton[0] == 0) start <= 1;
