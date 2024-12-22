@@ -3,7 +3,7 @@
 `Welcome!` Here you can find the guide for the builder kit!
 
 ```
-             *     ,MMM8&&&.            *
+ *           *     ,MMM8&&&.       
                   MMMM88&&&&&    .
                  MMMM88&&&&&&&
      *           MMM88&&&&&&&&
@@ -11,19 +11,19 @@
                  'MMM88&&&&&&'
                    'MMM8&&&'      *
           |\___/|
-          )     (             .              '
+          )     (             .    
          =\     /=
            )===(       *
           /     \
           |     |
          /       \
          \       /
-  _/\_/\_/\__  _/_/\_/\_/\_/\_/\_/\_/\_/\_/\_
-  |  |  |  |( (  |  |  |  |  |  |  |  |  |  |
-  |  |  |  | ) ) |  |  |  |  |  |  |  |  |  |
-  |  |  |  |(_(  |  |  |  |  |  |  |  |  |  |
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-  jgs|  |  |  |  |  |  |  |  |  |  |  |  |  |
+  _/\_/\_/\__  _/_/\_/\_/\_/\_/\_
+  |  |  |  |( (  |  |  |  |  |  |
+  |  |  |  | ) ) |  |  |  |  |  |
+  |  |  |  |(_(  |  |  |  |  |  |
+  |  |  |  |  |  |  |  |  |  |  |
+  |  |  |  |  |  |  |  |  |  |  |
 ```
 
 > By the end of this guide, you will be doing `embedded systems signal generation and manipulation on bare metal`
