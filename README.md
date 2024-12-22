@@ -48,7 +48,7 @@ So you have created a binary and it is generating signals on the FPGA to periphe
 
 Why can't we see the sigals on our laptop monitor without SIGROK? Or debug an issue with an LED on the PCB? Because the signals are between two black boxes! Therefore we must probe the wires between these boxes read the data bus.
 
-> The reader can install this tool on their host computer if they want to build the SPI protocol (reading/writing to flash memory) or the I2C protocol (reading/writing to OLED display)
+> The reader can install this tool on their host computer if they want to build the I2C protocol (reading/writing to OLED display)
 
 ---
 
