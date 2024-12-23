@@ -58,4 +58,4 @@ Follow the tutorials in order! Or don't!
 
 In each subdirectory, there is a `Makefile` which builds the hardware design and loads the resulting binary onto the FPGA. They have all been tested, and do work.
 
-> Once you have completed tutorial `0_blink`...Good job. You are now a **_bare-metal programmer_**. Good luck out there!
+> Once you have completed tutorial `0_blink`...Good job. You are now a **_bare-metal programmer_**. Good luck out there, and feel free to drop by the [discord](https://discord.gg/wacpcgqX)!
