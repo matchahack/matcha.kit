@@ -58,18 +58,4 @@ Follow the tutorials in order! Or don't!
 
 In each subdirectory, there is a `Makefile` which builds the hardware design and loads the resulting binary onto the FPGA. They have all been tested, and do work.
 
-> Once you have completed tutorial `0_blink`...Good job. You are now a **_bare-metal programmer_**.
-
----
-
-## RESOURCES
-
-The Tang Nano 9K docs can be found [in this directory](./docs/)
-
-The reader might also find these links useful:
-
-- [Alternate Verilog compiler with nice error messages](https://github.com/FPGAwars/apio)
-
-- [Debug openFPGA](https://trabucayre.github.io/openFPGALoader/guide/troubleshooting.html)
-
-> [These tutorials](https://www.digikey.com/en/maker/projects/introduction-to-fpga-part-1-what-is-an-fpga/3ee5f6c8fa594161a655a9f960060893) are also nice to follow!
+> Once you have completed tutorial `0_blink`...Good job. You are now a **_bare-metal programmer_**. Good luck out there!
