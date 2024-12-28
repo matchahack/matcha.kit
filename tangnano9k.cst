@@ -20,11 +20,7 @@ IO_PORT "mosi"          IO_TYPE=LVCMOS33;
 IO_LOC  "cs"            60;
 IO_PORT "cs"            IO_TYPE=LVCMOS33;
 
-IO_LOC  "bbutton[0]"    25;
-IO_LOC  "bbutton[1]"    27;
-IO_LOC  "bbutton[2]"    28;
+IO_LOC  "bbutton"       27;
 
 IO_LOC  "SDA"           85;
 IO_LOC  "SCK"           84;
-IO_LOC  "VDD"           83;
-IO_LOC  "GND"           82;

@@ -1,7 +1,7 @@
 module control
 (
     input           clk,
-    input   [2:0]   bbutton,
+    input           bbutton,
     output  [5:0]   led
 );
 
@@ -12,9 +12,7 @@ module control
     reg         start           = 0;
 
     always @(posedge clk) begin
-        if (bbutton[0] == 0) start <= 1;
-        if (bbutton[1] == 0) start <= 1;
-        if (bbutton[2] == 0) start <= 1;
+        if (bbutton == 0) start <= 1;
         if (start == 1) begin
             clockCounter <= clockCounter + 1;
             if (clockCounter == WAIT_TIME) begin
