@@ -22,5 +22,5 @@ IO_PORT "cs"            IO_TYPE=LVCMOS33;
 
 IO_LOC  "bbutton"       27;
 
-IO_LOC  "SDA"           85;
-IO_LOC  "SCK"           84;
+IO_LOC  "sda"           85;
+IO_LOC  "sck"           84;
