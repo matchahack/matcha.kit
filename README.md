@@ -3,13 +3,13 @@
 `Welcome!` Here you can find the guide for the builder kit!
 
 ```
- *           *     ,MMM8&&&.       
+ *           ⭐    ,MMM8&&&.       
                   MMMM88&&&&&    .
                  MMMM88&&&&&&&
-     *           MMM88&&&&&&&&
+     ⭐         MMMM88&&&&&&&&
                  MMM88&&&&&&&&
                  'MMM88&&&&&&'
-                   'MMM8&&&'      *
+                   'MMM8&&&'      ⭐
           |\___/|
           )     (             .    
          =\     /=
