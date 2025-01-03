@@ -40,16 +40,21 @@ module control
     localparam DONE     = 3;
 
     // commands
+    reg [7:0] ON        = 8'hA5; //A4
+    reg [7:0] INVERT    = 8'hA7; //A6
+
+    // counters
     reg [3:0] counter;
-    reg [7:0] ON        = 8'hA5;
-    reg [7:0] INVERT    = 8'hA7;
+    reg [10:0] one_microsec;
+    localparam OMSec = 10;
 
     initial begin
-        sda_reg <= 1;
-        scl_reg <= 1;
-        start   <= 0;
-        STATE   <= IDLE;
-        counter <= 7;
+        sda_reg         <= 1;
+        scl_reg         <= 1;
+        start           <= 0;
+        STATE           <= IDLE;
+        counter         <= 7;
+        one_microsec    <= OMSec;
     end
 
     // operation control
@@ -60,9 +65,12 @@ module control
             end
             INIT:begin
                 sda_reg <= 0;
-                // wait 1 microseconds
-                scl_reg <= ~scl_reg;
-                STATE   <= TURN_ON;
+                one_microsec <= one_microsec - 1;
+                if (one_microsec == 0) begin // wait 1 microseconds
+                    scl_reg         <= ~scl_reg;
+                    one_microsec    <= OMSec;
+                    STATE           <= TURN_ON;
+                end
             end
             TURN_ON:begin
                 scl_reg <= ~scl_reg;
@@ -71,10 +79,13 @@ module control
                 if (counter == 0) STATE <= DONE;
             end
             DONE:begin
-                // wait 1 microseconds
-                sda_reg <= 1;
-                scl_reg <= 1;
-                STATE <= IDLE;
+                one_microsec <= one_microsec - 1;
+                if (one_microsec == 0) begin // wait 1 microseconds
+                    sda_reg         <= 1;
+                    scl_reg         <= 1;
+                    one_microsec    <= OMSec;
+                    STATE           <= IDLE;
+                end
             end
         endcase
     end
