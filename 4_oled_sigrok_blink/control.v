@@ -29,9 +29,9 @@ module control
     reg sda_reg, scl_reg;
     wire sck_wire;
     assign sda = sda_reg;
-    assign sck = scl_reg;
+    assign sck = sck_wire;
 
-    // state
+    // FSM state
     reg start;
     reg [2:0] STATE;
     localparam IDLE     = 0;
@@ -39,26 +39,26 @@ module control
     localparam TURN_ON  = 2;
     localparam DONE     = 3;
 
-    // commands
-    reg [7:0] ON        = 8'hA5; //A4
-    reg [7:0] INVERT    = 8'hA7; //A6
-
-    // counters
+    // FSM counters
     reg [3:0] counter;
     reg [10:0] one_microsec;
-    localparam OMSec = 10;
+    localparam micro_sec = 2; // dummy
+
+    // SSD1306 opcodes
+    reg [7:0] ON        = 8'hA5; //A4
+    reg [7:0] INVERT    = 8'hA7; //A6
 
     initial begin
         sda_reg         <= 1;
         scl_reg         <= 1;
         start           <= 0;
         STATE           <= IDLE;
-        counter         <= 7;
-        one_microsec    <= OMSec;
+        counter         <= 7;           // opcode length
+        one_microsec    <= micro_sec;
     end
 
     // operation control
-    always @ (negedge sck_wire) begin // needs to operate at 3 microseconds
+    always @ (negedge sck_wire) begin // needs to operate at 3 micro_seconds
         if (start == 1) STATE <= INIT;
         case (STATE)
             IDLE:begin
@@ -66,9 +66,9 @@ module control
             INIT:begin
                 sda_reg <= 0;
                 one_microsec <= one_microsec - 1;
-                if (one_microsec == 0) begin // wait 1 microseconds
+                if (one_microsec == 0) begin        // wait 1 micro_seconds
                     scl_reg         <= ~scl_reg;
-                    one_microsec    <= OMSec;
+                    one_microsec    <= micro_sec;
                     STATE           <= TURN_ON;
                 end
             end
@@ -79,11 +79,11 @@ module control
                 if (counter == 0) STATE <= DONE;
             end
             DONE:begin
+                scl_reg         <= 1;
                 one_microsec <= one_microsec - 1;
-                if (one_microsec == 0) begin // wait 1 microseconds
+                if (one_microsec == 0) begin
                     sda_reg         <= 1;
-                    scl_reg         <= 1;
-                    one_microsec    <= OMSec;
+                    one_microsec    <= micro_sec;
                     STATE           <= IDLE;
                 end
             end
@@ -92,8 +92,8 @@ module control
 
     // UX control
     always @(posedge sck_wire) begin
-        if (bbutton == 0) start <= 1;
-        if (STATE == INIT) start <= 0;
+        if (bbutton == 0) start <= 1;  // begin program if button press
+        if (STATE == INIT) start <= 0; // set start back to 0 one program has begun
     end
 
     clk_div clk_div (
