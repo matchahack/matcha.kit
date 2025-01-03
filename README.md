@@ -30,19 +30,19 @@
 
 ---
 
-## TOOLS
+## INSTALL DEPENDENCIES
 
 We will try only to use `open-source` tools. The following are OS software we will use to make our hardware designs go `blinky blinky`.
 
-### Binary Building: Install the Toolchain
+#### Binary Building: Install the Toolchain
 
-The installation and build guide [here](https://learn.lushaylabs.com/os-toolchain-manual-installation/) targets our device - the 'Gowin' `FPGA (field programmable gate array)` on-board the TangNano9K. It covers Windows, Mac and Linux in fairly good detail.
+The installation and build guide [here](https://learn.lushaylabs.com/os-toolchain-manual-installation/) targets our device - the 'Gowin' `FPGA (field programmable gate array)` on-board the TangNano. It covers Windows, Mac and Linux in fairly good detail.
 
 Once the reader has installed this successfully, they will be able to design hardware that runs on the FPGA!
 
 > The reader must install this tool on their host computer
 
-### Recording Live Signals: Debugging your Design 
+#### Recording Live Signals: Debugging your Design 
 
 So you have created a binary and it is generating signals on the FPGA to peripheral components! How do you know it's doing what it is supposed to be doing? We need to record the signals - for this we will us the open-source tool [SIGROK](https://sigrok.org/).
 
@@ -52,7 +52,7 @@ Why can't we see the sigals on our laptop monitor without SIGROK? Or debug an is
 
 ---
 
-## INSTRUCTIONS
+## RUN THE TUTORIALS
 
 Follow the tutorials in order! Or don't!
 
