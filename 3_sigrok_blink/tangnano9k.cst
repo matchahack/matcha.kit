@@ -1,8 +1,0 @@
-IO_LOC  "clk"               52;
-IO_PORT "clk"               PULL_MODE=UP;
-
-//IO_LOC  "bbutton"       27;
-IO_LOC  "bbutton"       4;
-
-IO_LOC  "sda"           84;
-IO_LOC  "sck"           85;
