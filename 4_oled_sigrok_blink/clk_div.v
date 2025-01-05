@@ -3,36 +3,30 @@
 
 module clk_div(
     input       clk,        // Input clock: 27 MHz
-    output reg  sck,
-    output reg  phase_shift_sck
+    output reg  sck
 );
 
     // Counter to divide the clock
-    reg [20:0]  double_counter;
-    reg         double_reg;
+    reg [20:0]  counter;
+    reg         counter_reg;
 
     initial begin
-        double_counter      <= 0;
-        double_reg          <= 0;
+        counter             <= 0;
+        counter_reg         <= 0;
         sck                 <= 0;
-        phase_shift_sck     <= 0;
     end
 
     always @(posedge clk) begin
-        if (double_counter == 20'd350) begin
-            double_counter  <= 20'b0;
-            double_reg      <= ~double_reg;
+        if (counter == 20'd175) begin
+            counter         <= 20'b0;
+            counter_reg     <= ~counter_reg;
         end else begin
-            double_counter <= double_counter + 1'b1;
+            counter <= counter + 1'b1;
         end
     end
 
-    always @(negedge double_reg) begin
+    always @(negedge counter_reg) begin
         sck <= ~sck;
-    end
-
-    always @(posedge double_reg) begin
-        phase_shift_sck <= ~phase_shift_sck;
     end
 
 endmodule
