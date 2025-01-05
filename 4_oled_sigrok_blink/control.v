@@ -27,9 +27,9 @@ module control
 
     // wiring
     reg sda_reg, scl_reg;
-    wire sck_wire;
+    wire sck_wire, phase_shift_sck_wire;
     assign sda = sda_reg;
-    assign sck = sck_wire;
+    assign sck = scl_reg;
 
     // FSM state
     reg start;
@@ -42,7 +42,7 @@ module control
     // FSM counters
     reg [3:0] counter;
     reg [10:0] one_microsec;
-    localparam micro_sec = 2; // dummy
+    localparam micro_sec = 1; // dummy
 
     // SSD1306 opcodes
     reg [7:0] ON        = 8'hA5; //A4
@@ -58,7 +58,7 @@ module control
     end
 
     // operation control
-    always @ (negedge sck_wire) begin // needs to operate at 3 micro_seconds
+    always @ (negedge sck_wire) begin
         if (start == 1) STATE <= INIT;
         case (STATE)
             IDLE:begin
@@ -96,9 +96,11 @@ module control
         if (STATE == INIT) start <= 0; // set start back to 0 one program has begun
     end
 
+    // ~2.5 microsecond clock
     clk_div clk_div (
         .clk(clk),
-        .sck(sck_wire)
+        .sck(sck_wire),
+        .phase_shift_sck(phase_shift_sck_wire)
     );
 
 endmodule
