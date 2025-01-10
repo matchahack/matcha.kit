@@ -16,6 +16,7 @@
  */
 
 `include "clk_div.v"
+`include "i2c.v"
 
 module control
 (
@@ -24,96 +25,93 @@ module control
     output  sda,        // serial data
     output  sck         // serial clock
 );
-
-    // wiring
-    reg sda_reg, sck_reg;
-    wire sck_wire;
-    assign sda = sda_reg;
-    assign sck = sck_reg;
-
     // FSM state
     reg start;
     reg [2:0] STATE;
     localparam IDLE     = 0;
-    localparam INIT     = 1;
-    localparam START    = 2;
-    localparam DONE     = 3;
+    localparam INST_0   = 1;
+    localparam INST_1   = 2;
+    localparam INST_2   = 3;
 
     // FSM counters
     reg [3:0] counter;
     reg [1:0] delay_counter;
+    reg [9:0] wait_counter;
 
-    // SSD1306 opcodes
-    reg [7:0] ON        = 8'hA5; //A5:10100101, A4
-    reg [7:0] INVERT    = 8'hA7; //A6
+    // opcodes
+    reg [7:0] E_ON      = 8'hA5;
+    reg [7:0] INVERT    = 8'hA7;
+    reg [7:0] D_ON      = 8'hAF;
+
+    // signals
+    reg         op_start;
+    wire        op_busy;
+    reg [7:0]   instruction;
 
     initial begin
-        sda_reg         <= 1;
-        sck_reg         <= 1;
-        start           <= 0;
-        STATE           <= IDLE;
-        counter         <= 7;           // opcode length
-        delay_counter   <= 1;
+        counter     <= 4'd10;
+        op_start    <= 0;
+        instruction <= 0;        
+        STATE       <= IDLE;
     end
 
-    // data control
-    always @ (negedge sck_wire) begin
-        if (start == 1) STATE <= INIT;
-        case (STATE)
-            IDLE:begin
-            end
-            INIT:begin
-                if (delay_counter == 0) begin           // wait a cycle (>= 2.5 microseconds)
-                    sda_reg         <= ON[counter];
-                    counter         <= counter - 1;
-                    STATE           <= START;
-                end else begin
-                    sda_reg         <= 0;                   // sda to LOW
-                    delay_counter   <= delay_counter - 1;
-                end
-            end
-            START:begin
-                if (counter == 0) begin
-                    sda_reg         <= ON[counter];
-                    STATE           <= DONE;
-                end else begin
-                    sda_reg         <= ON[counter];         // pump out ON data during rising edge of SCK
-                    counter         <= counter - 1;
-                end
-            end
-            DONE:begin
-                STATE   <= IDLE;
-            end
-        endcase
-    end
-
-    // clock control
-    always @ (posedge sck_wire) begin
-        case (STATE)
-            INIT:begin
-                if(delay_counter==0)begin
-                    sck_reg <= 0;
-                end
-            end
-            START:begin  
-                sck_reg <= ~sck_reg;
-            end
-            DONE:begin   
-                sck_reg <= 1;
-            end
-        endcase
-    end
-
-    // UX control
+    // instructions
     always @(posedge clk) begin
-        if (bbutton == 0)   start <= 1;     // begin program if button press
-        if (STATE == INIT)  start <= 0;     // set start back to 0 one program has begun
+        case(STATE)
+            IDLE:begin
+                if (bbutton == 0)   STATE <= INST_0;     // begin program if button press
+            end
+            INST_0:begin
+                instruction <= E_ON;
+                counter     <= counter - 1;
+                if (counter == 0) begin
+                    counter     <= 4'd10;
+                    op_start    <= 1;
+                    if (op_busy == 0) begin
+                        STATE   <= INST_1;
+                    end
+                end
+            end
+            INST_1:begin
+                instruction <= INVERT;
+                counter     <= counter - 1;
+                op_start    <= 0;
+                if (counter == 0) begin
+                    counter     <= 4'd10;
+                    op_start    <= 1;
+                    if (op_busy == 0) begin
+                        STATE   <= INST_2;
+                    end
+                end
+            end
+            INST_2:begin
+                instruction <= D_ON;
+                counter     <= counter - 1;
+                op_start    <= 0;
+                if (counter == 0) begin
+                    counter     <= 4'd10;
+                    op_start    <= 1;
+                    if (op_busy == 0) begin
+                        STATE   <= IDLE;
+                    end                
+                end
+            end
+        endcase
     end
 
     // ~2.5 microsecond clock
     clk_div clk_div (
         .clk(clk),
         .sck(sck_wire)
+    );
+
+    i2c_module i2c(
+        .i_clk(clk),
+        .command(instruction),
+        .op_start(op_start),
+        .sck(sck),
+        .sda(sda),
+        .op_busy(op_busy)
     );
 
 endmodule
