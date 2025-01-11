@@ -45,7 +45,7 @@ module control
 
     // signals
     reg         op_start;
-    wire        op_busy;
+    wire         op_busy;
     reg [7:0]   instruction;
 
     initial begin

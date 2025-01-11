@@ -1,3 +1,20 @@
+/*
+ *
+ *  Copyright(C) 2025 Kai Harris <matchahack@gmail.com>
+ * 
+ *  Permission to use, copy, modify, and/or distribute this software for any purpose with or
+ *  without fee is hereby granted, provided that the above copyright notice and 
+ *  this permission notice appear in all copies.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO
+ *  THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. 
+ *  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL 
+ *  DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+ *  AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN 
+ *  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ * 
+ */
+
 `ifndef i2c_M   // Check if i2c_M is not defined
 `define i2c_M   // Define i2c_M
 
@@ -27,33 +44,37 @@ module i2c_module(
     // FSM counters
     reg [3:0] counter;
     reg [1:0] delay_counter;
-    reg [9:0] wait_counter;
+    reg [5:0] wait_counter;
 
     // opcodes
     reg [7:0] E_ON      = 8'hA5;
     reg [7:0] INVERT    = 8'hA7;
     reg [7:0] D_ON      = 8'hAF;
 
-    // signals
-    reg op_busy;
+    // signal
+    reg op_busy_reg;
+    assign op_busy = op_busy_reg;
 
     initial begin
+        sck_reg         <= 0;
+        sda_reg         <= 0;
         start           <= 0;
         STATE           <= IDLE;
         counter         <= 7;           // opcode length
         delay_counter   <= 1;
-        wait_counter    <= 100;
-        op_busy         <= 0;
+        wait_counter    <= 6'b100000;
+        op_busy_reg     <= 1;
     end
 
     // data control
     always @ (negedge i_clk) begin
-        if (op_start == 1) STATE <= INIT;
+        if (op_start == 1 && op_busy_reg == 0) STATE <= INIT;
         case (STATE)
             IDLE:begin
-                op_busy <= 1;
+                op_busy_reg <= 0;
             end
             INIT:begin
+                op_busy_reg <= 1;
                 if (delay_counter == 0) begin           // wait a cycle (>= 2.5 microseconds)
                     sda_reg         <= command[counter];
                     counter         <= counter - 1;
@@ -76,8 +97,8 @@ module i2c_module(
             DONE:begin
                 wait_counter <= wait_counter - 1;
                 if (wait_counter == 0) begin
-                    wait_counter    <= 100;
-                    STATE           <= INIT;
+                    wait_counter    <= 6'b100000;
+                    STATE           <= IDLE;
                 end
             end
         endcase
