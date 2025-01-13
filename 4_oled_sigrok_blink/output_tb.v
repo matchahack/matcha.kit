@@ -20,12 +20,11 @@
 module output_tb();
     reg clk = 0;
     reg bbutton = 1;
-    
     wire sda, sck;
 
     localparam CLK_PERIOD       = 3.704;    // 27 MHz clock -> 1/27_000_000 second period -> 3.704 nanoseconds
     localparam HALF_CLK_PERIOD  = 1.852;
-    localparam DURATION         = 500;
+    localparam DURATION         = 300000;
 
     integer clk_counter = 0;             // Counter to manage signal toggling
 
@@ -43,13 +42,23 @@ module output_tb();
         clk = ~clk;                    // Toggle clock signal every half period
         clk_counter = clk_counter + 1;
 
-        if (clk_counter == 1) begin
+        if (clk_counter == 2000) begin
             bbutton = 0;
         end
         
-        if (clk_counter == 5) begin
+        if (clk_counter == 2500) begin
             bbutton = 1;
         end
+
+        /*
+        if (clk_counter == 20) begin
+            bbutton = 0;
+        end
+        
+        if (clk_counter == 25) begin
+            bbutton = 1;
+        end
+        */
     end
 
     control main_tb (
