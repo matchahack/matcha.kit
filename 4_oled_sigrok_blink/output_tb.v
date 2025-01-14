@@ -49,16 +49,6 @@ module output_tb();
         if (clk_counter == 2500) begin
             bbutton = 1;
         end
-
-        /*
-        if (clk_counter == 20) begin
-            bbutton = 0;
-        end
-        
-        if (clk_counter == 25) begin
-            bbutton = 1;
-        end
-        */
     end
 
     control main_tb (

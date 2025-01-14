@@ -27,7 +27,7 @@ module control
 );
 
     // wiring
-    wire sck_scl_wire, sck_sda_wire;
+    wire sck_scl_wire, sck_scl_split_wire, sck_sda_wire;
 
     // FSM state
     reg start;
@@ -36,15 +36,8 @@ module control
     localparam IDLE     = 3'd0;
     localparam WAIT     = 3'd1;
     localparam INST_0   = 3'd2;
-    localparam INST_1   = 3'd3;
-    localparam INST_2   = 3'd4;
 
-    // opcodes
-    reg [7:0] ADDRESS;
-    reg [7:0] CONTROL;
-    reg [7:0] DATA;
-    reg [7:0] CHARGE_PUMP      = 8'h8D; // 1000 1101
-    reg [7:0] DISPLAY_ON       = 8'hAF; // 1010 1111
+    reg [63:0] DISPLAY_BLINK;
 
     // signals
     reg     op_start;
@@ -54,25 +47,34 @@ module control
     reg [15:0] wait_counter;
 
     initial begin
-        op_start        <= 0;
-        ADDRESS         <= 0;
-        CONTROL         <= 0;
-        DATA            <= 0;
-        STATE           <= IDLE;
-        NEXT_STATE      <= IDLE;
-        wait_counter    <= 16'h1000;
+        op_start            <= 0;
+        DISPLAY_BLINK       <= 0;
+        STATE               <= IDLE;
+        NEXT_STATE          <= IDLE;
+        wait_counter        <= 16'h1000;
     end
 
     // instructions
     always @(posedge clk) begin
         case(STATE)
             IDLE:begin
-                if (bbutton == 0)   begin           // begin program if button press
-                    ADDRESS     <= 8'h3C;           // WRITE MODE: 0011 1100
-                    CONTROL     <= 8'h00;           // DATA ONLY:  0000 0000
-                    DATA        <= CHARGE_PUMP;
-                    NEXT_STATE  <= INST_0;
-                    STATE       <= WAIT;
+                if (bbutton == 0)   begin          // begin program if button press
+                    DISPLAY_BLINK[62:55] <= 8'h3C;  // SUB ADDRESS IN WRITE MODE
+                    DISPLAY_BLINK[54:54] <= 1'b1;   // ACK
+                    DISPLAY_BLINK[53:46] <= 8'h80;  // CONTROL CONTINUATION
+                    DISPLAY_BLINK[45:45] <= 1'b1;   // ACK
+                    DISPLAY_BLINK[44:37] <= 8'hA4;  // RESUME INSTRUCTION
+                    DISPLAY_BLINK[36:36] <= 1'b1;   // ACK
+                    DISPLAY_BLINK[35:28] <= 8'h80;  // CONTROL CONTINUATION
+                    DISPLAY_BLINK[27:27] <= 1'b1;   // ACK
+                    DISPLAY_BLINK[26:19] <= 8'h8D;  // CHARGE PUMP INSTRUCTION
+                    DISPLAY_BLINK[18:18] <= 1'b1;   // ACK
+                    DISPLAY_BLINK[17:10] <= 8'h00;  // CONTROL NON-CONTINUATION
+                    DISPLAY_BLINK[9:9]   <= 1'b1;   // ACK
+                    DISPLAY_BLINK[8:1]   <= 8'hAF;  // DISPLAY ON INSTRUCTION
+                    DISPLAY_BLINK[0:0]   <= 1'b1;   // ACK
+                    NEXT_STATE           <= INST_0;
+                    STATE                <= WAIT;
                 end
             end
             WAIT:begin
@@ -85,21 +87,10 @@ module control
             INST_0:begin
                 if (op_done == 0) op_start <= 1;
                 if (op_done == 1 && op_start == 1) begin
-                    op_start    <= 0;
-                    DATA        <= DISPLAY_ON;
-                    NEXT_STATE  <= INST_1;
-                    STATE       <= WAIT;
-                end
-            end
-            INST_1:begin
-                if (op_done == 0) op_start <= 1;
-                if (op_done == 1 && op_start == 1) begin
-                    op_start    <= 0;
-                    ADDRESS     <= 0;
-                    CONTROL     <= 0;
-                    DATA        <= 0;
-                    NEXT_STATE  <= IDLE;
-                    STATE       <= IDLE;
+                    op_start        <= 0;
+                    DISPLAY_BLINK   <= 0;
+                    NEXT_STATE      <= IDLE;
+                    STATE           <= IDLE;
                 end
             end
         endcase
@@ -109,16 +100,16 @@ module control
     clk_div clk_div (
         .clk(clk),
         .sck_scl(sck_scl_wire),
+        .sck_scl_split(sck_scl_split_wire),
         .sck_sda(sck_sda_wire)
     );
 
     // IIC control module
     i2c_module i2c(
         .clk_scl(sck_scl_wire),
+        .clk_scl_split(sck_scl_split_wire),
         .clk_sda(sck_sda_wire),
-        .address(ADDRESS),
-        .control(CONTROL),
-        .data(DATA),
+        .command(DISPLAY_BLINK),
         .op_start(op_start),
         .op_done(op_done),
         .sck(sck),

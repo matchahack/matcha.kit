@@ -4,6 +4,7 @@
 module clk_div(
     input       clk,
     output reg  sck_scl,
+    output reg  sck_scl_split,
     output reg  sck_sda
 );
 
@@ -17,16 +18,21 @@ module clk_div(
         HALF_CYLE_LEN       <= 20'd175;
         CYCLE_LEN           <= 20'd350;
         sck_scl             <= 1;
-        sck_sda             <= 1;
+        sck_scl_split       <= 1;
+        sck_sda             <= 0;
     end
 
     always @(posedge clk) begin
         if (counter != CYCLE_LEN)       counter <= counter + 20'b1;
         if (counter == CYCLE_LEN)       counter <= 0;
-        if (counter == HALF_CYLE_LEN)   sck_scl <= ~sck_scl;
+        if (counter == HALF_CYLE_LEN)   begin
+            sck_scl         <= ~sck_scl;
+            sck_scl_split   <= ~sck_scl_split;
+        end
+        if (counter == HALF_CYLE_LEN - 20'd86) sck_scl_split <= ~sck_scl_split;
         if (sck_scl == 0) begin
-            if (counter == CYCLE_LEN - 20'b1)   sck_sda     <= ~sck_sda;
-            if (counter == CYCLE_LEN)           sck_sda     <= ~sck_sda;
+            if (counter == CYCLE_LEN - 20'd1)   sck_sda <= ~sck_sda;
+            if (counter == CYCLE_LEN)           sck_sda <= ~sck_sda;
         end
     end
 
