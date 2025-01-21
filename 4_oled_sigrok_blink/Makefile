@@ -10,7 +10,7 @@ control.json: control.v
 
 # Place and Route
 control_pnr.json: control.json
-	nextpnr-gowin --json control.json --freq 27 --write control_pnr.json --device ${DEVICE} --family ${FAMILY} --cst "../${BOARD}.cst"
+	nextpnr-gowin --json control.json --freq 27 --write control_pnr.json --device ${DEVICE} --family ${FAMILY} --cst ${BOARD}.cst
 
 # Generate Bitstream
 control.fs: control_pnr.json

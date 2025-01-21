@@ -23,4 +23,7 @@ IO_PORT "cs"            IO_TYPE=LVCMOS33;
 IO_LOC  "bbutton"       27;
 
 IO_LOC  "sda"           85;
+IO_PORT "sda"           PULL_MODE=UP;
+
 IO_LOC  "sck"           84;
+IO_PORT "sck"           PULL_MODE=UP;
