@@ -1,4 +1,6 @@
-# windows
+# SIGROK Blink
+
+### windows
 
 > install wsl2
 
@@ -18,7 +20,7 @@
 
 > > `usbipd attach --wsl --busid <your_device_BUSID>`
 
-> in wsl2 terminal: `make all`, `make load`
+> in wsl2 terminal: `make load`
 
 > in sigrok
 
@@ -27,3 +29,14 @@
 > > `run`
 
 > > press button on breadboard, then press `run` again to see the changes
+
+
+Then run the following from your terminal:
+
+```
+make load
+```
+
+To see this:
+
+[]!
