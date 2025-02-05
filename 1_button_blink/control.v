@@ -2,12 +2,12 @@ module control
 (
     input           clk,
     input   [1:0]   button,
-    output  [5:0]   led
+    output  [2:0]   led
 );
 
     localparam WAIT_TIME = 13500000;
 
-    reg [5:0]   ledCounter      = 0;
+    reg [2:0]   ledCounter      = 0;
     reg [23:0]  clockCounter    = 0;
     reg         start           = 0;
 

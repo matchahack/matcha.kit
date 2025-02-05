@@ -1,6 +1,6 @@
-BOARD=tangnano9k
-FAMILY=GW1N-9C
-DEVICE=GW1NR-LV9QN88PC6/I5
+BOARD=tangnano
+FAMILY=GW1NZ-1
+DEVICE=GW1NZ-LV1QN48C6/I5
 
 all: control.fs
 
@@ -20,16 +20,8 @@ control.fs: control_pnr.json
 load: control.fs
 	openFPGALoader -b ${BOARD} control.fs -f
 
-verify:
-	apio verify
-	make clean
-
-sim:
-	apio sim
-	make clean
-
 clean:
-	rm .sconsign.dblite *.out *.vcd *.history *.json *.gtkw *.asc *.bin control.fs
+	rm control.fs
 
 .PHONY: load
 .INTERMEDIATE: control_pnr.json control.json

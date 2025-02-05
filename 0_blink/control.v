@@ -1,21 +1,23 @@
 module control
 (
     input           clk,
-    output  [5:0]   led
+    output  [2:0]   led
 );
 
-    localparam WAIT_TIME = 13500000;
+    reg [31:0] counter;
 
-    reg [5:0]  ledCounter   = 0;
-    reg [23:0] clockCounter = 0;
+    initial begin
+        counter <= 31'd0;
+        led <= 3'b110;
+    end
 
     always @(posedge clk) begin
-        clockCounter <= clockCounter + 1;
-        if (clockCounter == WAIT_TIME) begin
-            clockCounter <= 0;
-            ledCounter <= ledCounter + 1;
+        if (counter < 31'd1350_0000)       // 0.5s delay
+            counter <= counter + 1;
+        else begin
+            counter <= 31'd0;
+            led[2:0] <= {led[1:0],led[2]};
         end
     end
 
-    assign led = ~ledCounter;
 endmodule

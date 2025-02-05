@@ -1,0 +1,6 @@
+set_io  clk             47
+
+set_io  bbutton         27
+
+set_io  sda             25
+set_io  sck             26

@@ -1,0 +1,22 @@
+IO_LOC  "clk"               47;
+IO_PORT "clk"               PULL_MODE=UP;
+
+IO_LOC  "led[0]"            9;
+IO_LOC  "led[1]"            10;
+IO_LOC  "led[2]"            11;
+
+IO_LOC  "button[0]"         13;
+IO_LOC  "button[1]"         44;
+
+IO_LOC  "bbutton"           15;
+IO_PORT "bbutton"           IO_TYPE=LVCMOS33;
+IO_PORT "bbutton"           PULL_MODE=UP;
+
+IO_LOC  "sda"               20;
+IO_PORT "sda"               IO_TYPE=LVCMOS33;
+IO_PORT "sda"               DRIVE=8;
+
+IO_LOC  "sck"               34;
+IO_PORT "sck"               IO_TYPE=LVCMOS33;
+IO_PORT "sck"               DRIVE=8;
+IO_PORT "sck"               PULL_MODE=UP;
