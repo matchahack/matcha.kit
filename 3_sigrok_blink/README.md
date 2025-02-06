@@ -1,5 +1,7 @@
 # SIGROK Blink
 
+> Here, we want to `press the button` so that you can see a signal on your `logic analyzer`
+
 ### windows
 
 > install wsl2
@@ -36,7 +38,3 @@ Then run the following from your terminal:
 ```
 make load
 ```
-
-To see this:
-
-[]!
