@@ -2,7 +2,7 @@
 
 `Welcome!` Here you can find the guide for the builder kit!
 
-![final tutorial](./OLED.gif)
+![assemble_on](./gadget.gif)
 
 > By the end of this guide, you will be doing `embedded systems signal generation and manipulation on bare metal`
 
