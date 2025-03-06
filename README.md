@@ -6,7 +6,7 @@
 
 > By the end of this guide, you will be doing `embedded systems signal generation and manipulation on bare metal`
 
-> Note that although `this whole kit _is_ open source`, you can also buy it in one go [here](https://matchahack.bigcartel.com/product/matcha-kit) for your convenience (or if you want to help the project grow!)
+> Note that although `this whole kit is open source`, you can also [buy it in one go here](https://matchahack.bigcartel.com/product/matcha-kit) for your convenience (or if you want to help the project grow!)
 ---
 
 ## INSTALL DEPENDENCIES
