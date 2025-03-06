@@ -9,33 +9,9 @@
 > Note that although `this whole kit is open source`, you can also [buy it in one go here](https://matchahack.bigcartel.com/product/matcha-kit) for your convenience (or if you want to help the project grow!)
 ---
 
-## INSTALL DEPENDENCIES
-
-We will try only to use `open-source` tools. The following are the OS software we will use to make our hardware designs go `blinky blinky`.
-
-> Note that you will need some basic `linunx terminal` skills to follow this course! I can recommend [the official linux command line guide](https://ubuntu.com/tutorials/command-line-for-beginners) for anyone wanting to upskill
-
-#### Install the Toolchain
-
-We want to load our designs onto the FPGA.
-
-For this we need specialised softwares: [this installation and build guide](https://learn.lushaylabs.com/os-toolchain-manual-installation/) targets our device - the 'Gow1n' `FPGA (field programmable gate array)` on-board the TangNano. It covers Windows, Mac and Linux in fairly good detail, and is open source.
-
-> The reader must install this tool on their computer
-
-#### Debugging Programs 
-
-From tutorial 3 onward, you will be creating designs on the FPGA that are generating signals off the board! How do you know it's doing what it is supposed to be doing? 
-
-For this, we need to record the signals it generates - and so we will [install another open source tool: sigrok](https://sigrok.org/wiki/Downloads).
-
-> The reader can install this tool on their host computer if they want to build the I2C protocol (reading/writing to OLED display)
-
----
-
 ## RUN THE TUTORIALS
 
-There is a `README.md` to follow in the tutorials. You can follow in order! Or not! Up to you.
+There is a `README.md` to follow in each of the tutorials. You can follow in order! Or not! Up to you.
 
 In each subdirectory, there is a `Makefile` which builds the hardware design and loads the resulting binary onto the FPGA. They have all been tested, and do work.
 
