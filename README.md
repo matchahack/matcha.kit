@@ -2,10 +2,11 @@
 
 `Welcome!` Here you can find the guide for the builder kit!
 
-![assemble_on](./gadget.gif)
+![assemble_on](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG03dXprbDFncHR0b283YXhkZHppbDZ2amphNTBnYzI3cTV6MXh3aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hNv3CRdwO8kyjTxfh5/giphy.gif)
 
 > By the end of this guide, you will be doing `embedded systems signal generation and manipulation on bare metal`
 
+> Note that although `this whole kit _is_ open source`, you can also buy it in one go [here](https://matchahack.bigcartel.com/product/matcha-kit) for your convenience (or if you want to help the project grow!)
 ---
 
 ## INSTALL DEPENDENCIES
