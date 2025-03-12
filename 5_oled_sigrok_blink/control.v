@@ -15,7 +15,7 @@
  * 
  */
 
-`include "clk_div.v" // Include the clock divider module
+`include "enable.v" // Include the clock divider module
 `include "i2c.v"     // Include the I2C module
 
 // Top-level control module for I2C communication
@@ -130,7 +130,7 @@ module control
     end
 
     // Instantiate the clock divider module
-    clk_div clk_div (
+    enable enable (
         .clk(clk),                                          // System clock input
         .sck_scl(sck_scl_wire),                             // Output clock for I2C SCL
         .sck_scl_split(sck_scl_split_wire),                 // Split clock signal
