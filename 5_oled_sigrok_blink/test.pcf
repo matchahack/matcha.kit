@@ -1,0 +1,6 @@
+set_io              clk             35
+
+set_io              bbutton         12
+
+set_io  -pullup yes sda             11
+set_io  -pullup yes sck             10
