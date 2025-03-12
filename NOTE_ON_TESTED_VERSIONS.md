@@ -1,0 +1,1 @@
+- The designs in this repo are tested and verified on the Yosys flow prior to the integration of `nextpnr-himbaechel` to Apicula, when `nextpnr-gowin` was still supported

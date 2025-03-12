@@ -24,7 +24,7 @@ module output_tb();
 
     localparam CLK_PERIOD       = 3.704;    // 27 MHz clock -> 1/27_000_000 second period -> 3.704 nanoseconds
     localparam HALF_CLK_PERIOD  = 1.852;
-    localparam DURATION         = 3000000;
+    localparam DURATION         = 2000000;
 
     integer clk_counter = 0;             // Counter to manage signal toggling
 
