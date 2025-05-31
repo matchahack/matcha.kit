@@ -15,7 +15,7 @@
  * 
  */
 
-`include "clk_div.v"
+`include "clk_div.sv"
 
 module control
 (

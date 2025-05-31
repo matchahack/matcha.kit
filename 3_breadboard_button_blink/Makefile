@@ -1,27 +1,18 @@
 BOARD=tangnano
 FAMILY=GW1NZ-1
 DEVICE=GW1NZ-LV1QN48C6/I5
+TOP=control
 
-all: control.fs
+sim:
+	iverilog -o ${TOP}_tb ${TOP}_tb.sv ${TOP}.sv
+	vvp ${TOP}_tb.sv
+	gtkwave ${TOP}_tb.vcd
 
-# Synthesis
-control.json: control.v
-	yosys -p "read_verilog control.v; synth_gowin -top control -json control.json"
-
-# Place and Route
-control_pnr.json: control.json
-	nextpnr-gowin --json control.json --freq 27 --write control_pnr.json --device ${DEVICE} --family ${FAMILY} --cst "../${BOARD}.cst"
-
-# Generate Bitstream
-control.fs: control_pnr.json
-	gowin_pack -d ${FAMILY} -o control.fs control_pnr.json
-
-# Program Board
-load: control.fs
-	openFPGALoader -b ${BOARD} control.fs -f
+load:
+	yosys -p "read_verilog ${TOP}.sv; synth_gowin -json ${TOP}.json"
+	nextpnr-himbaechel --json ${TOP}.json --write ${TOP}.json --device ${DEVICE} --vopt cst=../${BOARD}.cst --vopt family=${FAMILY}
+	gowin_pack -d ${DEVICE} -o ${TOP}.fs ${TOP}.json
+	openFPGALoader -b ${BOARD}${SIZE} -f --verbose ${TOP}.fs
 
 clean:
-	rm control.fs
-
-.PHONY: load
-.INTERMEDIATE: control_pnr.json control.json
+	rm ${TOP}_tb ${TOP}_tb.vcd *.fs *.json

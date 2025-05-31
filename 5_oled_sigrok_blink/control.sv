@@ -15,8 +15,8 @@
  * 
  */
 
-`include "enable.v" // Include the clock divider module
-`include "i2c.v"     // Include the I2C module
+`include "enable.sv" // Include the clock divider module
+`include "i2c.sv"     // Include the I2C module
 
 // Top-level control module for I2C communication
 module control
@@ -31,6 +31,7 @@ module control
     wire sck_scl_wire, sck_scl_split_wire, sck_sda_wire;
 
     // Finite State Machine (FSM) states and control signals
+    reg bbutton_prev;
     reg start;              // Start signal for FSM
     reg [4:0] NEXT_STATE;   // Next state register for FSM
     reg [4:0] STATE;        // Current state register for FSM
@@ -69,6 +70,7 @@ module control
 
     // FSM to control I2C operations
     always @(posedge clk) begin
+        bbutton_prev <= bbutton;
         case (STATE)
 
             WAIT: begin
@@ -82,7 +84,7 @@ module control
 
             IDLE: begin
                 // If button is pressed, start the program
-                if (bbutton == 0 && one_punch == 0) begin
+                if (bbutton == 0 && one_punch == 0 && bbutton_prev == 1) begin
                     COMMAND     <= 8'h8D;                   // Load the command to send (CHARGE PUMP SETTING)
                     NEXT_STATE  <= INST_0;                  // Set next state to instruction execution
                     STATE       <= WAIT;                    // Transition to wait state

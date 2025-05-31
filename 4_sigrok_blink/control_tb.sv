@@ -17,7 +17,7 @@
  
 `timescale 1 ns / 1 ps  // Time scale directive, 1 ns time unit, 1 ps time precision
 
-module output_tb();
+module control_tb();
     reg clk = 0;
     reg bbutton = 1;
     
@@ -31,8 +31,8 @@ module output_tb();
 
     // Initial block to setup waveform dumping
     initial begin
-        $dumpfile("output_tb.vcd");    
-        $dumpvars(0, output_tb);       
+        $dumpfile("control_tb.vcd");    
+        $dumpvars(0, control_tb);       
         #(DURATION);                  
         $finish;                       
     end

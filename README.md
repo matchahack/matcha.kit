@@ -15,7 +15,7 @@ There is a `README.md` to follow in each of the tutorials. You can follow in ord
 
 In each subdirectory, there is a `Makefile` which builds the hardware design and loads the resulting binary onto the FPGA. They have all been tested, and do work.
 
-> Once you have completed tutorial `0_blink`...Good job. You are now a **_bare-metal programmer_**. Good luck out there, and feel free to drop by the [discord](https://discord.com/channels/1320785628333346836/1321062900311396362) if you have questions!
+> Once you have completed tutorial `1_blink`...Good job. You are now a **_bare-metal programmer_**. Good luck out there, and feel free to drop by the [discord](https://discord.com/channels/1320785628333346836/1321062900311396362) if you have questions!
 
 ```
  *           ⭐    ,MMM8&&&.       

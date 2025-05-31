@@ -6,7 +6,7 @@
 
 > Run:
 ```
-apio sim
+make sim
 ```
 
 ### Burn to flash

@@ -1,4 +1,7 @@
 */*.fs
+*/*.json
 */*.out
 */*.vcd
 */*.sconsign.dblite
+*/*control_tb
+test/
