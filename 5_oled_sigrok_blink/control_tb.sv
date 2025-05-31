@@ -17,21 +17,21 @@
  
 `timescale 1 ns / 1 ps  // Time scale directive, 1 ns time unit, 1 ps time precision
 
-module test_tb();
+module control_tb();
     reg clk = 0;
     reg bbutton = 1;
     wire sda, sck;
 
     localparam CLK_PERIOD       = 3.704;    // 27 MHz clock -> 1/27_000_000 second period -> 3.704 nanoseconds
     localparam HALF_CLK_PERIOD  = 1.852;
-    localparam DURATION         = 2000000;
+    localparam DURATION         = 1500000;
 
     integer clk_counter = 0;             // Counter to manage signal toggling
 
     // Initial block to setup waveform dumping
     initial begin
-        $dumpfile("test_tb.vcd");    
-        $dumpvars(0, test_tb);       
+        $dumpfile("control_tb.vcd");    
+        $dumpvars(0, control_tb);       
         #(DURATION);                  
         $finish;                       
     end

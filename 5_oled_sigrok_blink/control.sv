@@ -15,7 +15,7 @@
  * 
  */
 
-`include "enable.sv" // Include the clock divider module
+`include "clk_div.sv" // Include the clock divider module
 `include "i2c.sv"     // Include the I2C module
 
 // Top-level control module for I2C communication
@@ -31,7 +31,6 @@ module control
     wire sck_scl_wire, sck_scl_split_wire, sck_sda_wire;
 
     // Finite State Machine (FSM) states and control signals
-    reg bbutton_prev;
     reg start;              // Start signal for FSM
     reg [4:0] NEXT_STATE;   // Next state register for FSM
     reg [4:0] STATE;        // Current state register for FSM
@@ -56,6 +55,11 @@ module control
     // Delay counter for timing control
     reg [15:0] wait_counter;
 
+    // Single button press execution
+    reg     start           = 0;
+    reg     bbutton_prev    = 1;
+    reg     initialized     = 0;
+
     // Initialization of registers
     initial begin
         op_start            <= 0;        // Initialize operation start signal
@@ -70,7 +74,19 @@ module control
 
     // FSM to control I2C operations
     always @(posedge clk) begin
-        bbutton_prev <= bbutton;
+        
+        if (!initialized) begin
+            bbutton_prev <= bbutton;
+            if (bbutton == 1) begin
+                initialized <= 1;
+            end
+        end else begin
+            if (bbutton_prev && !bbutton) begin
+                start <= 1;
+            end
+            bbutton_prev <= bbutton;
+        end
+
         case (STATE)
 
             WAIT: begin
@@ -84,7 +100,7 @@ module control
 
             IDLE: begin
                 // If button is pressed, start the program
-                if (bbutton == 0 && one_punch == 0 && bbutton_prev == 1) begin
+                if (start == 1 && one_punch == 0) begin
                     COMMAND     <= 8'h8D;                   // Load the command to send (CHARGE PUMP SETTING)
                     NEXT_STATE  <= INST_0;                  // Set next state to instruction execution
                     STATE       <= WAIT;                    // Transition to wait state
@@ -132,7 +148,7 @@ module control
     end
 
     // Instantiate the clock divider module
-    enable enable (
+    clk_div clk_div (
         .clk(clk),                                          // System clock input
         .sck_scl(sck_scl_wire),                             // Output clock for I2C SCL
         .sck_scl_split(sck_scl_split_wire),                 // Split clock signal

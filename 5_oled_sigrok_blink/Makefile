@@ -15,4 +15,4 @@ load:
 	openFPGALoader -b ${BOARD}${SIZE} -f --verbose ${TOP}.fs
 
 clean:
-	rm ${TOP}_tb ${TOP}_tb.vcd *.fs *.json
+	rm ${TOP}_tb ${TOP}_tb.vcd *.fs *.json *.vcd
