@@ -31,7 +31,6 @@ module control
     wire sck_scl_wire, sck_scl_split_wire, sck_sda_wire;
 
     // Finite State Machine (FSM) states and control signals
-    reg start;              // Start signal for FSM
     reg [4:0] NEXT_STATE;   // Next state register for FSM
     reg [4:0] STATE;        // Current state register for FSM
     
