@@ -18,8 +18,8 @@
 `timescale 1 ns / 1 ps  // Time scale directive, 1 ns time unit, 1 ps time precision
 
 module control_tb();
-    reg clk = 0;
-    reg bbutton = 1;
+    logic clk = 0;
+    logic bbutton = 1;
     
     wire sda, sck;
 
