@@ -8,6 +8,10 @@
 ```
 make sim
 ```
+or
+```
+make sim_iverilog
+``
 
 ### Burn to flash
 
