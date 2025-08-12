@@ -25,15 +25,10 @@ module control
     output  sck         // serial clock
 );
     reg start = 0;
-    reg sda_reg;
+    reg sda_reg = 0;
     wire clk_wire, sck_wire;
     assign sda = sda_reg;
     assign sck = sck_wire;
-
-    initial begin
-        start   <= 0;
-        sda_reg <= 0;
-    end
 
     always @(posedge sck) begin
         if (bbutton == 0) begin

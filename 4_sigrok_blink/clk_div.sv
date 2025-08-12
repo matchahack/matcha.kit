@@ -3,16 +3,11 @@
 
 module clk_div(
     input  clk, // Input clock: 27 MHz
-    output reg sck  // Output clock: 3 MHz
+    output reg sck = 0  // Output clock: 3 MHz
 );
 
     // Counter to divide the clock
-    reg [3:0] counter; // 4-bit counter (0 to 8 requires at least 4 bits)
-
-    initial begin
-        counter <= 0;
-        sck <= 0;
-    end
+    reg [3:0] counter = 0; // 4-bit counter (0 to 8 requires at least 4 bits)
 
     always @(posedge clk) begin
         if (counter == 4'd8) begin

@@ -5,3 +5,6 @@
 */*.sconsign.dblite
 */*control_tb
 test/
+venv
+sim_build/
+__pycache__/
