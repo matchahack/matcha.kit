@@ -16,13 +16,13 @@ module clk_div(
     reg [19:0]  scl_split_offset;
 
     initial begin
-        counter             <= 0;
-        HALF_CYLE_LEN       <= 20'd350;
-        scl_split_offset    <= 20'd174;
-        CYCLE_LEN           <= 20'd700;
-        sck_scl             <= 1;
-        sck_scl_split       <= 1;
-        sck_sda             <= 0;
+        counter             = 0;
+        HALF_CYLE_LEN       = 20'd350;
+        scl_split_offset    = 20'd174;
+        CYCLE_LEN           = 20'd700;
+        sck_scl             = 1;
+        sck_scl_split       = 1;
+        sck_sda             = 0;
     end
 
     always @(posedge clk) begin

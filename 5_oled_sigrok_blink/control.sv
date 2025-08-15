@@ -31,7 +31,6 @@ module control
     wire sck_scl_wire, sck_scl_split_wire, sck_sda_wire;
 
     // Finite State Machine (FSM) states and control signals
-    reg start;              // Start signal for FSM
     reg [4:0] NEXT_STATE;   // Next state register for FSM
     reg [4:0] STATE;        // Current state register for FSM
     
@@ -62,14 +61,14 @@ module control
 
     // Initialization of registers
     initial begin
-        op_start            <= 0;        // Initialize operation start signal
-        one_punch           <= 0;
-        ADDRESS             <= 8'h78;    // Set default I2C device address (example)
-        CONTROL             <= 8'h00;    // Set default control register value
-        COMMAND             <= 8'h00;    // Set default command value
-        STATE               <= IDLE;     // Set initial FSM state
-        NEXT_STATE          <= IDLE;     // Set next state to idle initially
-        wait_counter        <= 16'hFFFF; // Set default delay counter value
+        op_start            = 0;        // Initialize operation start signal
+        one_punch           = 0;
+        ADDRESS             = 8'h78;    // Set default I2C device address (example)
+        CONTROL             = 8'h00;    // Set default control register value
+        COMMAND             = 8'h00;    // Set default command value
+        STATE               = IDLE;     // Set initial FSM state
+        NEXT_STATE          = IDLE;     // Set next state to idle initially
+        wait_counter        = 16'hFFFF; // Set default delay counter value
     end
 
     // FSM to control I2C operations
@@ -143,6 +142,10 @@ module control
 
             STOP: begin
                 // Stop state placeholder (currently unused)
+            end
+
+            default: begin
+                // Keep current state
             end
         endcase
     end
